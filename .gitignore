@@ -1,0 +1,11 @@
+build
+autom4te.cache/requests
+config.log
+config.status
+scripts/mk_exception.pyc
+scripts/mk_project.pyc
+scripts/mk_util.pyc
+src/api/dll/install_tactic.cpp
+src/api/staticlib/install_tactic.cpp
+src/shell/install_tactic.cpp
+src/test/install_tactic.cpp
