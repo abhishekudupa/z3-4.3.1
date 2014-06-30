@@ -2,6 +2,7 @@ build
 autom4te.cache
 config.log
 config.status
+configure
 scripts/mk_exception.pyc
 scripts/mk_project.pyc
 scripts/mk_util.pyc
