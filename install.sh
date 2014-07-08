@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf ./install
+mkdir install
 cp -a ./build/*.py ./install/
 cp -a ./build/*.pyc ./install/
 cp -a ./build/*.a ./install/

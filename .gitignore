@@ -10,3 +10,4 @@ src/api/dll/install_tactic.cpp
 src/api/staticlib/install_tactic.cpp
 src/shell/install_tactic.cpp
 src/test/install_tactic.cpp
+install/*
