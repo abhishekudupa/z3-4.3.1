@@ -1,13 +1,12 @@
 default:		all
+INSTALLDIR=$(realpath .)/install
 
-all:			z3libsbuilt.ph
+all:			$(INSTALLDIR)/z3libsbuilt.ph
 
-z3libsbuilt.ph:
-	./build.sh; touch $@
+$(INSTALLDIR)/z3libsbuilt.ph:
+	./build.sh; ./install.sh; ./clean.sh
 
 .PHONY:			clean
 
 clean:
-	./clean.sh; rm -rf z3libsbuilt.ph
-
-
+	./clean.sh; rm -rf $(INSTALLDIR)/*
