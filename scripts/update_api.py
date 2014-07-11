@@ -62,7 +62,30 @@ core_py.write('# Automatically generated file\n')
 core_py.write('import sys, os\n')
 core_py.write('import ctypes\n')
 core_py.write('from z3types import *\n')
-core_py.write('from z3consts import *\n')
+core_py.write('from z3consts import *\n\n')
+# audupa: compat wrappers
+core_py.write("""
+def running_python3():
+  vinfo = sys.version_info
+  if vinfo[0] == 2:
+    return False
+  else:
+    return True
+
+def to_c_string(s):
+  if running_python3():
+    return s.encode('ascii')
+  else:
+    return s
+
+def from_c_string(s):
+  if running_python3():
+    return s.decode('utf-8')
+  else:
+    return s
+
+""")
+
 core_py.write("""
 _lib = None
 def lib():
@@ -259,6 +282,16 @@ def display_args(num):
             core_py.write(", ")
         core_py.write("a%s" % i)
 
+def use_args(num, types):
+    for i in range(num):
+        if i > 0:
+            core_py.write(", ")
+        if param_type(types[i]) != STRING:
+            core_py.write("a%s" % i)
+        else:
+            core_py.write("to_c_string(a%s)" % i)
+        
+
 def mk_py_wrappers():
     core_py.write("\n")
     for sig in _API2PY:
@@ -273,14 +306,16 @@ def mk_py_wrappers():
             core_py.write("  r = lib().%s(" % name)
         else:
             core_py.write("  lib().%s(" % name)
-        display_args(num)
+        use_args(num, params)
         core_py.write(")\n")
         if len(params) > 0 and param_type(params[0]) == CONTEXT:
             core_py.write("  err = lib().Z3_get_error_code(a0)\n")
             core_py.write("  if err != Z3_OK:\n")
             core_py.write("    raise Z3Exception(lib().Z3_get_error_msg_ex(a0, err))\n")
-        if result != VOID:
+        if result != VOID and result != STRING:
             core_py.write("  return r\n")
+        elif result == STRING:
+            core_py.write("  return from_c_string(r)\n")
         core_py.write("\n")
 
 
