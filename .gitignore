@@ -6,6 +6,8 @@ configure
 scripts/mk_exception.pyc
 scripts/mk_project.pyc
 scripts/mk_util.pyc
+src/api/python/z3core.py
+src/api/python/z3core.pyc
 src/api/dll/install_tactic.cpp
 src/api/staticlib/install_tactic.cpp
 src/shell/install_tactic.cpp
